@@ -18,6 +18,7 @@ public class Health : MonoBehaviour
         {
             health = 0;
             Debug.Log("We are dead" + gameObject.name);
+            Destroy(gameObject);
         }
     }
 }

@@ -26,7 +26,7 @@ public class CharacterMovementController : MonoBehaviour
     public LayerMask platformLayerMask;
 
     [Header("Movement States")]
-    public MovementStates movementStates;
+    public MovementStates movementState;
     public FacingDirection facingDirection;
 
     private Rigidbody2D rigidBody2D;
@@ -47,7 +47,6 @@ public class CharacterMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        SetCharacterState();
         HandleMovement();
         PlayAnimationsBasedOnState();
         SetCharacterDirection();
@@ -83,7 +82,7 @@ public class CharacterMovementController : MonoBehaviour
         }
     }
 
-    private bool isGrounded()
+    public bool isGrounded()
     {
         //collider çarýþtýrýcý
         RaycastHit2D raycastHit2D = Physics2D.BoxCast(
@@ -97,33 +96,7 @@ public class CharacterMovementController : MonoBehaviour
         return raycastHit2D.collider != null;
     }
 
-    private void SetCharacterState()
-    {
-        if (isGrounded())
-        {
-            if (rigidBody2D.velocity.x == 0)
-            {
-                //play Idle
-                movementStates = MovementStates.Idle;
-            }
-            else if (rigidBody2D.velocity.x > 0)
-            {
-                //play run
-                facingDirection = FacingDirection.Right;
-                movementStates = MovementStates.Running;
-            }
-            else if (rigidBody2D.velocity.x < 0)
-            {
-                facingDirection = FacingDirection.Left;
-                movementStates = MovementStates.Running;
-            }
-        }
-        else
-        {
-            //play jump
-            movementStates = MovementStates.Jumping;
-        }
-    }
+
     private void SetCharacterDirection()//karakter yönü ayarlama
     {
         switch (facingDirection)
@@ -139,7 +112,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private void PlayAnimationsBasedOnState()
     {
-        switch (movementStates)
+        switch (movementState)
         {
             case MovementStates.Idle:
                 animController.PlayIdleAnim();
@@ -155,5 +128,10 @@ public class CharacterMovementController : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void SetMovementState(MovementStates movementStates)
+    {
+        movementState = movementStates;
     }
 }

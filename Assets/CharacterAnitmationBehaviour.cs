@@ -8,7 +8,7 @@ public class CharacterAnitmationBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       animator.gameObject.GetComponent<CharacterMovementController>().movementStates = movementStates;
+       animator.gameObject.GetComponent<CharacterMovementController>().movementState = movementStates;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
